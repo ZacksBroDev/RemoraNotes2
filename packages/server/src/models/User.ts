@@ -142,11 +142,12 @@ const userSchema = new Schema<IUser>(
 // Don't return sensitive fields by default
 userSchema.set('toJSON', {
   transform: (_doc, ret) => {
-    delete ret.encryptedRefreshToken;
-    delete ret.encryptedDEK;
-    delete ret.calendarSyncToken;
-    delete ret.contactsSyncToken;
-    delete ret.__v;
+    const obj = ret as unknown as Record<string, unknown>;
+    delete obj.encryptedRefreshToken;
+    delete obj.encryptedDEK;
+    delete obj.calendarSyncToken;
+    delete obj.contactsSyncToken;
+    delete obj.__v;
     return ret;
   },
 });

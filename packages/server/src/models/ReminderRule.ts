@@ -116,7 +116,8 @@ reminderRuleSchema.index({ userId: 1, isActive: 1 });
 
 reminderRuleSchema.set('toJSON', {
   transform: (_doc, ret) => {
-    delete ret.__v;
+    const obj = ret as unknown as Record<string, unknown>;
+    delete obj.__v;
     return ret;
   },
 });

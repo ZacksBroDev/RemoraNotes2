@@ -100,7 +100,8 @@ calendarEventSchema.index({ endDateTime: 1 }, { expireAfterSeconds: 120 * 24 * 6
 
 calendarEventSchema.set('toJSON', {
   transform: (_doc, ret) => {
-    delete ret.__v;
+    const obj = ret as unknown as Record<string, unknown>;
+    delete obj.__v;
     return ret;
   },
 });

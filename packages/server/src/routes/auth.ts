@@ -65,12 +65,10 @@ router.get(
 
       // Parse state
       let returnTo = '/';
-      let requestedScopes: GoogleOptionalScope[] = [];
       if (stateBase64 && typeof stateBase64 === 'string') {
         try {
           const state = JSON.parse(Buffer.from(stateBase64, 'base64').toString());
           returnTo = state.returnTo || '/';
-          requestedScopes = state.requestedScopes || [];
         } catch {
           // Ignore state parse errors
         }
@@ -96,7 +94,7 @@ router.get(
         // Update existing user
         user.email = googleUser.email;
         user.name = googleUser.name;
-        user.avatarUrl = googleUser.avatarUrl;
+        user.avatarUrl = googleUser.avatarUrl ?? undefined;
         user.lastLoginAt = new Date();
 
         // Merge granted scopes (don't remove existing)

@@ -2,11 +2,14 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import pinoHttp from 'pino-http';
+import pinoHttpModule from 'pino-http';
+import type { IncomingMessage } from 'node:http';
 import { config } from './config/index.js';
 import { logger } from './utils/index.js';
 import { errorHandler, notFoundHandler } from './middleware/index.js';
 import routes from './routes/index.js';
+
+const pinoHttp = pinoHttpModule.default ?? pinoHttpModule;
 
 export function createApp() {
   const app = express();
@@ -38,7 +41,7 @@ export function createApp() {
     pinoHttp({
       logger,
       autoLogging: {
-        ignore: (req) => req.url === '/api/v1/health',
+        ignore: (req: IncomingMessage) => req.url === '/api/v1/health',
       },
     })
   );

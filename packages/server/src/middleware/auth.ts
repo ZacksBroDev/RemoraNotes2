@@ -2,7 +2,7 @@ import type { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { config } from '../config/index.js';
 import { User, type IUser } from '../models/index.js';
-import { errors, logger } from '../utils/index.js';
+import { errors } from '../utils/index.js';
 import type { GoogleOptionalScope } from '@remoranotes/shared';
 
 // Extend Express Request type
@@ -105,8 +105,10 @@ export function requireScope(scope: GoogleOptionalScope) {
 
 // Generate JWT token for user
 export function generateToken(userId: string): string {
+  // Cast expiresIn to satisfy jsonwebtoken's ms.StringValue type requirement
+  // Values like '7d', '1h' etc are valid StringValue literals
   return jwt.sign({ userId }, config.jwt.secret, {
-    expiresIn: config.jwt.expiresIn,
+    expiresIn: config.jwt.expiresIn as '7d',
   });
 }
 

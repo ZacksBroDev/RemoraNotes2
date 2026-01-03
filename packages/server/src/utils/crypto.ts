@@ -3,7 +3,6 @@ import { generateDataKey, decryptDataKey } from '../config/aws.js';
 
 const ALGORITHM = 'aes-256-gcm';
 const IV_LENGTH = 16;
-const AUTH_TAG_LENGTH = 16;
 
 export interface EncryptedData {
   iv: string;

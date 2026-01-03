@@ -108,7 +108,7 @@ const reminderInstanceSchema = new Schema<IReminderInstance>(
 reminderInstanceSchema.index({ userId: 1, status: 1, dueDate: 1 });
 reminderInstanceSchema.index({ userId: 1, dueDate: 1, status: 1 });
 reminderInstanceSchema.index({ ruleId: 1, dueDate: 1 });
-reminderInstanceSchema.index({ instanceKey: 1 }, { unique: true });
+// Note: instanceKey already has unique: true in schema definition
 
 // TTL index for auto-cleanup of old completed instances (30 days after completion)
 reminderInstanceSchema.index(
@@ -118,7 +118,8 @@ reminderInstanceSchema.index(
 
 reminderInstanceSchema.set('toJSON', {
   transform: (_doc, ret) => {
-    delete ret.__v;
+    const obj = ret as unknown as Record<string, unknown>;
+    delete obj.__v;
     return ret;
   },
 });

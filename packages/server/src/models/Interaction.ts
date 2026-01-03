@@ -56,7 +56,8 @@ interactionSchema.index({ contactId: 1, occurredAt: -1 });
 
 interactionSchema.set('toJSON', {
   transform: (_doc, ret) => {
-    delete ret.__v;
+    const obj = ret as unknown as Record<string, unknown>;
+    delete obj.__v;
     return ret;
   },
 });

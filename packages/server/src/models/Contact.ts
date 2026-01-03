@@ -180,10 +180,11 @@ contactSchema.index({ userId: 1, 'anniversary.month': 1, 'anniversary.day': 1 })
 // Hide internal fields
 contactSchema.set('toJSON', {
   transform: (_doc, ret) => {
-    delete ret.emailHash;
-    delete ret.phoneHash;
-    delete ret.localOverrides;
-    delete ret.__v;
+    const obj = ret as unknown as Record<string, unknown>;
+    delete obj.emailHash;
+    delete obj.phoneHash;
+    delete obj.localOverrides;
+    delete obj.__v;
     return ret;
   },
 });

@@ -12,14 +12,17 @@ import type { PlanTier } from '@remoranotes/shared';
 
 export class InteractionService {
   private userId: mongoose.Types.ObjectId;
-  private encryptedDEK: string;
-  private plan: PlanTier;
+  // Reserved for future encryption implementation
+  // @ts-expect-error - Reserved for encryption feature
+  private _encryptedDEK: string;
+  // @ts-expect-error - Reserved for plan-based limits
+  private _plan: PlanTier;
   private contactService: ContactService;
 
   constructor(userId: mongoose.Types.ObjectId, encryptedDEK: string, plan: PlanTier) {
     this.userId = userId;
-    this.encryptedDEK = encryptedDEK;
-    this.plan = plan;
+    this._encryptedDEK = encryptedDEK;
+    this._plan = plan;
     this.contactService = new ContactService(userId, encryptedDEK, plan);
   }
 

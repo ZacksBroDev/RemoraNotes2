@@ -65,7 +65,7 @@ router.get(
   async (req: Request, res: Response<ApiResponse>, next: NextFunction): Promise<void> => {
     try {
       const service = new ContactService(req.user!._id, req.user!.encryptedDEK, req.user!.plan);
-      const contact = await service.getById(req.params.id);
+      const contact = await service.getById(req.params.id!);
 
       res.json({
         success: true,
@@ -85,7 +85,7 @@ router.patch(
   async (req: Request, res: Response<ApiResponse>, next: NextFunction): Promise<void> => {
     try {
       const service = new ContactService(req.user!._id, req.user!.encryptedDEK, req.user!.plan);
-      const contact = await service.update(req.params.id, req.body, req.ip);
+      const contact = await service.update(req.params.id!, req.body, req.ip);
 
       res.json({
         success: true,
@@ -104,7 +104,7 @@ router.delete(
   async (req: Request, res: Response<ApiResponse>, next: NextFunction): Promise<void> => {
     try {
       const service = new ContactService(req.user!._id, req.user!.encryptedDEK, req.user!.plan);
-      await service.delete(req.params.id, req.ip);
+      await service.delete(req.params.id!, req.ip);
 
       res.json({ success: true });
     } catch (error) {
@@ -120,7 +120,7 @@ router.post(
   async (req: Request, res: Response<ApiResponse>, next: NextFunction): Promise<void> => {
     try {
       const service = new ContactService(req.user!._id, req.user!.encryptedDEK, req.user!.plan);
-      const contact = await service.setArchived(req.params.id, true);
+      const contact = await service.setArchived(req.params.id!, true);
 
       res.json({
         success: true,
@@ -139,7 +139,7 @@ router.post(
   async (req: Request, res: Response<ApiResponse>, next: NextFunction): Promise<void> => {
     try {
       const service = new ContactService(req.user!._id, req.user!.encryptedDEK, req.user!.plan);
-      const contact = await service.setArchived(req.params.id, false);
+      const contact = await service.setArchived(req.params.id!, false);
 
       res.json({
         success: true,

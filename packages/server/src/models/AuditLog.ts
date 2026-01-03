@@ -60,11 +60,10 @@ const auditLogSchema = new Schema<IAuditLog>({
   ipHash: String,
   userAgent: String,
 
-  // Timestamp
+  // Timestamp (indexed via TTL index below)
   timestamp: {
     type: Date,
     default: Date.now,
-    index: true,
   },
 });
 
@@ -78,7 +77,8 @@ auditLogSchema.index({ timestamp: 1 }, { expireAfterSeconds: 90 * 24 * 60 * 60 }
 
 auditLogSchema.set('toJSON', {
   transform: (_doc, ret) => {
-    delete ret.__v;
+    const obj = ret as unknown as Record<string, unknown>;
+    delete obj.__v;
     return ret;
   },
 });

@@ -1,5 +1,7 @@
-import pino from 'pino';
+import pinoModule from 'pino';
 import { config } from '../config/index.js';
+
+const pino = pinoModule.default ?? pinoModule;
 
 // Redact sensitive fields
 const redactPaths = [
@@ -32,7 +34,7 @@ export const logger = pino({
     censor: '[REDACTED]',
   },
   formatters: {
-    level: (label) => ({ level: label }),
+    level: (label: string) => ({ level: label }),
   },
 });
 

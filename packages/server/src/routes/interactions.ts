@@ -65,7 +65,7 @@ router.get(
   async (req: Request, res: Response<ApiResponse>, next: NextFunction): Promise<void> => {
     try {
       const service = new InteractionService(req.user!._id, req.user!.encryptedDEK, req.user!.plan);
-      const interaction = await service.getById(req.params.id);
+      const interaction = await service.getById(req.params.id!);
 
       res.json({
         success: true,
@@ -85,7 +85,7 @@ router.patch(
   async (req: Request, res: Response<ApiResponse>, next: NextFunction): Promise<void> => {
     try {
       const service = new InteractionService(req.user!._id, req.user!.encryptedDEK, req.user!.plan);
-      const interaction = await service.update(req.params.id, req.body, req.ip);
+      const interaction = await service.update(req.params.id!, req.body, req.ip);
 
       res.json({
         success: true,
@@ -104,7 +104,7 @@ router.delete(
   async (req: Request, res: Response<ApiResponse>, next: NextFunction): Promise<void> => {
     try {
       const service = new InteractionService(req.user!._id, req.user!.encryptedDEK, req.user!.plan);
-      await service.delete(req.params.id, req.ip);
+      await service.delete(req.params.id!, req.ip);
 
       res.json({ success: true });
     } catch (error) {

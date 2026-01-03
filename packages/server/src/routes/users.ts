@@ -111,9 +111,9 @@ router.delete(
       await User.deleteOne({ _id: userId });
 
       // Clear auth cookie
-      const { clearAuthCookie, clearDEKCache } = await import('../middleware/index.js');
-      const { clearDEKCache: clearCache } = await import('../utils/index.js');
-      clearCache(userId.toString());
+      const { clearAuthCookie } = await import('../middleware/index.js');
+      const { clearDEKCache } = await import('../utils/index.js');
+      clearDEKCache(userId.toString());
       clearAuthCookie(res);
 
       res.json({ success: true });
